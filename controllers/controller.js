@@ -15,12 +15,12 @@ module.exports = {
     res.json(result)
   },
   createTask: async (req, res) => {
-    let result = await Task.createTask(req.query)
+    let result = await Task.createTask(req.body)
     res.json(result)
   },
 
   getTaskByIdAndUpdate: async (req, res) => {
-    let result = await Task.findByIdAndUpdate(req.params.id, req.query)
+    let result = await Task.findByIdAndUpdate(req.params.id, req.body)
     res.json(result)
   },
   deleteTask: async (req, res) => {
