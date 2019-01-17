@@ -8,12 +8,18 @@ export class TaskGetsService {
   
   constructor(private _http: HttpClient) { 
   }
+
   getAllTasks(){
     return this._http.get('/getalltasks')
     
   }
-  getTask(){
-    return this._http.get('/gettaskbyid/5c3e6a92ae73f77ed7add65e')
+
+  getTask(id){
+    return this._http.get(`/gettaskbyid/${id}`)
+  
+  }
+  postTask(data){
+    return this._http.post('/createnewtask', data)
   }
 }
 
