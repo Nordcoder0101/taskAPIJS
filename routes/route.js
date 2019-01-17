@@ -1,6 +1,6 @@
 const controller = require("../controllers/controller")
 module.exports = (app) => {
-  app.get('/', controller.index)
+  // app.get('/', controller.index)
   app.get('/getalltasks', controller.getAllTasks)
   app.get('/gettaskbyid/:id', controller.getTaskById)
   app.post('/createnewtask', controller.createTask)

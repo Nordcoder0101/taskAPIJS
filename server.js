@@ -16,7 +16,7 @@ app.use(session({
 }))
 
 const path = require('path')
-app.use(express.static(path.join(__dirname, './static')))
+app.use(express.static(path.join(__dirname, './public/dist/public/')))
 
 app.set('views', path.join(__dirname, './views'))
 app.set('view engine', 'ejs')
