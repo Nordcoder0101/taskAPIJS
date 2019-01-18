@@ -8,12 +8,31 @@
   
     <ng-container *ngFor="let task of tasks">
       <h3>{{task.title}}</h3>
-      <button (click)="showTaskDetail(task._id, $event)">Show Details</button>
+      <h3>{{task.description}}</h3>
+      <!-- <button (click)="showTaskDetail(task._id, $event)">Show Details</button> -->
+      <button (click)="showEditTask(task._id)">EDIT</button>
+      <button (click)="deleteTask(task._id)">Delete</button>
+      
+        <ng-container *ngIf="showEdit && task.showEdit">
+          <form (submit)="editTask(task._id)">
+            Name:<input type ="text" name="editAtask.title" [(ngModel)]="editATask.title">
+            Description:<input type="text" name="editAtask.description" [(ngModel)]="editATask.description">
+            <input type="submit" value="Edit Task">
+          </form>
+        </ng-container>
+        <hr>
     </ng-container>
   
   <button (click)="getTasksFromService($event)">Click Me</button>
   <button (click)="testingPost(true, 'get post working', 'works!')">Test Post</button>
   
+  <form (submit)='createTask()'>
+    <p>{{ newTask | json }}</p>
+      <input type="text" name="newTask.title" [(ngModel)]="newTask.title"/>
+      <input type="text" name="newTask.description" [(ngModel)]="newTask.description" />
+      <input type="submit" value="Create Task"/>
+  </form>
+
   
 </div>
 
