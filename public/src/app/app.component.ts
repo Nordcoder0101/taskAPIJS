@@ -22,6 +22,30 @@ export class AppComponent implements OnInit {
     console.log(this.showEdit)
   }
 
+  doThingFromTask(data){
+    console.log(`${data} before if statement`)
+    
+    for (let i in this.tasks)
+      if (this.tasks[i]._id == data._id){
+        if (!data.completed) {
+          this.tasks[i].completed = true;
+          console.log(data, "Changed to true")
+        } else {
+          this.tasks[i].completed = false;
+          console.log(data, "Changed to false")
+        }
+      }
+    
+  }
+
+  showTask(id){
+    for (let i in this.tasks){
+      if(this.tasks[i]._id == id){
+        this.tasks[i].showTask = true;
+      }
+    }
+  }
+
   editTask(id){
     let observable = this._TaskGetsService.editTask(id, this.editATask)
     observable.subscribe((data) => {
@@ -37,19 +61,12 @@ export class AppComponent implements OnInit {
   }
 
   deleteTask(id){
-    
-    let observable = this._TaskGetsService.deleteTask(id)
     for (let i in this.tasks) {
       if (this.tasks[i]._id == id) {
-
         this.tasks.splice(parseInt(i), 1)
       }
-    }
-    observable.subscribe((data) => {
-      
-      
-      console.log(this.tasks.length)
-    })
+    }    
+    this._TaskGetsService.deleteTask(id).subscribe()
   }
 
   showEditTask(id){
@@ -65,32 +82,29 @@ export class AppComponent implements OnInit {
   }
 
   getTasksFromService(e): void {
-   let observable = this._TaskGetsService.getAllTasks()
-   observable.subscribe((data) => {
-     this.tasks = data['data']
-   
-
-   })
+   this._TaskGetsService.getAllTasks()
+    .subscribe((data) => {
+      this.tasks = data['data'];
+    })
   }
 
   createTask(): void {
     console.log(this.newTask)
-    let observable = this._TaskGetsService.postTask(this.newTask)
-    
-    observable.subscribe((info) =>{
-      this.newTask['title'] = ""
-      this.newTask['description'] = ""
-    })
+    this._TaskGetsService.postTask(this.newTask)
+      .subscribe((info) => {
+        this.newTask['title'] = ""
+        this.newTask['description'] = ""
+      })
   }
   
   showTaskDetail(id, e): void {
     console.log(id)
-    let observable = this._TaskGetsService.getTask(id)
-    observable.subscribe((data) => {
-      console.log(data['data'])
-    e.srcElement.previousElementSibling.innerHTML = `Title: ${data['data']['title']},
-    Description: ${data['data']['description']}, Compelted = ${data['data']['completed']}`
-    })
+    this._TaskGetsService.getTask(id)
+      .subscribe((data) => {
+        console.log(data['data'])
+        e.srcElement.previousElementSibling.innerHTML = `Title: ${data['data']['title']},
+        Description: ${data['data']['description']}, Compelted = ${data['data']['completed']}`
+      })
   }
 
   

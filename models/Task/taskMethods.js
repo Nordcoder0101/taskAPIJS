@@ -54,17 +54,17 @@ module.exports = {
 
    findByIdAndUpdate: function(id, data){
      
-      return Task.findById(id)
-     .then((task) =>{
-      task.title = data.title
-      task.description = data.description
-      task.completed = data.completed
-      task.updatad_at = new Date()
-      return task.save()
-     .then((task) => {
-       return {
-         message: 'Success',
-         data: task
+    return Task.findById(id)
+      .then((task) =>{
+        task.title = data.title
+        task.description = data.description
+        task.completed = data.completed
+        task.updatad_at = new Date()
+        return task.save()
+      .then((task) => {
+        return {
+          message: 'Success',
+          data: task
         }
       })
      .catch((err) => {
@@ -78,13 +78,14 @@ module.exports = {
 
    findByIdAndDelete: function(id){
      console.log('got here!', id)
-     return Task.remove({_id: id})
-     .then((result) => {
-       
-       return {message:'Successfully deleted'}
-      })
-     .catch(() => {
-       return {message:'Something went wrong during delete'}
-      })
+     return Task.findByIdAndDelete(id)
+      .then(result => {
+        return {
+          message: 'Successfully deleted'
+          }
+        })
+      .catch(() => {
+        return {message:'Something went wrong during delete'}
+        })
    }
 }
